@@ -5,6 +5,8 @@ def verify_json_input(file_path, silent=False):
     try:
         with open(file_path, 'r') as file:
             data = json.load(file)
+            
+        data = data.get('PolicyDocument')
 
         if data.get('Version') != '2012-10-17':
             return False
