@@ -6,10 +6,25 @@ def verify_json_input(file_path, silent=False):
         with open(file_path, 'r') as file:
             data = json.load(file)
 
-        policy_document = data['PolicyDocument']
-        for statement in policy_document['Statement']:
-            if 'Resource' in statement and statement['Resource'] == '*':
+        if data.get('Version') != '2012-10-17':
+            return False
+
+        statements = data.get('Statement')
+        if not statements or not isinstance(statements, list):
+            return False
+
+        for statement in statements:
+            if 'Effect' not in statement or statement['Effect'] not in ['Allow', 'Deny']:
                 return False
+            if 'Action' not in statement or (not isinstance(statement['Action'], list) and not isinstance(statement['Action'], str)):
+                return False
+            if 'Resource' not in statement:
+                return False
+
+            resource = statement['Resource']
+            if resource == '*' or (isinstance(resource, list) and '*' in resource):
+                return False
+
         return True
 
     except json.JSONDecodeError:
