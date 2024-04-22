@@ -55,4 +55,4 @@ Here's an example of the content:
 Replace the Resource value with * to test for a negative result.
 
 ### License
-This project is licensed under the MIT License - see the [LICENSE.md](/LICENSE.md) file for details.
+This project is licensed under the MIT License - see the [LICENSE](/LICENSE) file for details.
